@@ -10,6 +10,14 @@ import math
 w, h, x, y, a, sc, r, s = 500, 500, 0, 0, 0, 0, 100.0, 0.2
 dx, dy, da, dsc = s, s, s, s
 
+# w dan h adalah width dan height viewport
+# x dan y adalah posisi x dan y
+# a adalah angle atau rotasi dari logo
+# sc adalah scale dari logo
+# s adalah step atau speed, merupakan kecepatan setiap iterasi, jika semakin besar, maka animasi akan lebih cepat
+
+# semua dengan prefix d adalah direction, jadi dx, dy, da, dan dsc adalah direction dari x, y, a, dan sc
+
 
 def draw_circle(start_angle_degrees, angle_degrees, radius, num_segment, x_center, y_center):
     start_angle = math.radians(start_angle_degrees)
@@ -115,22 +123,22 @@ def iterate():
         # jika ukuran logo lebih kecil atau sama dengan 1x lipat dari ukuran aslinya, maka besarkan
         dsc = s
 
-    x += dx
-    y += dy
+    x += dx # posisi x ditambahkan dengan arah dx, jika positif akan bergerak ke kanan, jika negatif akan bergerak ke kiri
+    y += dy # posisi y ditambahkan dengan arah dy, jika positif akan bergerak ke atas, jika negatif akan bergerak ke bawah
 
-    a += da
+    a += da # angle atau rotasi ditambah dengan arah rotasi (da), jika positif akan bergerak berlawanan dengan arah jarum jam, jika negatif akan bergerak searah dengan jarum jam
 
-    sc += dsc * 0.001 # 0.1%
-    r = 100.0 * (1.0 + sc)
+    sc += dsc * 0.001 # scale akan ditambahkan dengan 0.1% dari arah scale (dsc), jika positif maka akan membesar, jika negatif maka akan mengecil
+    r = 100.0 * (1.0 + sc) # r adalah jari-jari dari logo
 
-    glTranslatef(x, y, 0.0)
+    glTranslatef(x, y, 0.0) # translate sumbu x dan y
 
-    glRotatef(a, 0, 0, 1)
+    glRotatef(a, 0, 0, 1) # rotate sumbu z
 
-    glScalef(1.0 + sc, 1.0 + sc, 0)
+    glScalef(1.0 + sc, 1.0 + sc, 0) # scale x dan y
 
     if 360 >= a <= -360:
-        # jika rotasi sudah 360°, atur a menjadi 0°
+        # jika rotasi sudah 360°, atur a menjadi 0°, supaya tidak terjadi error ketika a melebihi jumlah maksimum int pada python
         a = 0
 
 
